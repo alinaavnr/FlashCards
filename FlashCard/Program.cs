@@ -79,7 +79,6 @@ class Program
 
         int score = 0;
 
-        // --- Случайный порядок ---
         var list = new List<KeyValuePair<string, string>>(words);
         Random rnd = new Random();
         for (int i = list.Count - 1; i > 0; i--)
@@ -87,7 +86,6 @@ class Program
             int j = rnd.Next(i + 1);
             (list[i], list[j]) = (list[j], list[i]);
         }
-        // ---------------------------
 
         foreach (var pair in list)
         {
