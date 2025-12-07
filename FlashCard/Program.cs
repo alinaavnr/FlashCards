@@ -79,7 +79,17 @@ class Program
 
         int score = 0;
 
-        foreach (var pair in words)
+        // --- Случайный порядок ---
+        var list = new List<KeyValuePair<string, string>>(words);
+        Random rnd = new Random();
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = rnd.Next(i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
+        // ---------------------------
+
+        foreach (var pair in list)
         {
             Console.Write($"Переведите: {pair.Key}  (подсказка: {pair.Value[0]})\n> ");
 
@@ -88,14 +98,8 @@ class Program
 
             string answer = Console.ReadLine()?.Trim().ToLower();
 
-            if (answer == "menu")
-            {
-                return;
-            }
-            if (answer == "exit")
-            {
-                Environment.Exit(0);
-            }
+            if (answer == "menu") return;
+            if (answer == "exit") Environment.Exit(0);
             if (answer == "skip")
             {
                 Console.WriteLine($"Пропущено. Правильно: {pair.Value}\n");
@@ -114,7 +118,6 @@ class Program
         }
 
         Console.WriteLine($"Ваш результат: {score} из {words.Count}");
-        Console.WriteLine("Нажмите любую клавишу...");
         Console.ReadKey();
     }
     static void AddWord()
